@@ -1,0 +1,1 @@
+#include <stdio.h>#include <unistd.h>int main(void){	pid_t pid;	char cmd[10];	if((pid = fork()) < 0)		printf("Error. Child process couldn't be created\n");	if(pid == 0)	{		printf("Being executed by child process...\n");		printf("Enter the command: ");		scanf("%s",cmd);		system(cmd);	}	wait();	return 0;}

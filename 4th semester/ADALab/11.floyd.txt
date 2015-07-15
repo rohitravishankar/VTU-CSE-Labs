@@ -1,0 +1,123 @@
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<omp.h>
+#include<math.h>
+#include<sys/time.h>
+#define MAX 10
+
+//int floyds[MAX][MAX],floydp[MAX][MAX];
+int min( int a, int b)
+{
+	return (a<b)?a:b;
+}
+void floyd_ser(int cost[MAX][MAX],int n)
+{
+	int i,j,k,floyds[MAX][MAX];
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			floyds[i][j]=cost[i][j];
+		}
+	}
+
+	for(k=0;k<n;k++)
+	{
+		for(i=0;i<n;i++)
+		{
+			for(j=0;j<n;j++)
+			{
+				floyds[i][j] = min((floyds[i][j]),(floyds[i][k]+floyds[k][j]));
+			}
+		}
+	}
+	printf("Output Matrix using serial approach : \n");
+        for(i=0;i<n;i++)
+        {
+                for(j=0;j<n;j++)
+                {
+                        printf("%d\t",floyds[i][j]);
+                }
+                printf("\n");
+        }
+
+}
+void floyd_par(int cost[MAX][MAX],int n)
+{
+	int i,j,k,floydp[MAX][MAX];
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			floydp[i][j]=cost[i][j];
+		}
+	}
+	omp_set_num_threads(20);
+	#pragma omp parallel for private(k) shared(floydp,n)
+	for(k=0;k<n;k++)
+	{
+		for(i=0;i<n;i++)
+		{
+			for(j=0;j<n;j++)
+			{
+				floydp[i][j]=min((floydp[i][j]),(floydp[i][k]+floydp[k][j]));
+//				printf("Thread is %d \t",  omp_get_thread_num());
+			}
+		}
+	}
+	printf("Output Matrix using parallel approach : \n");
+        for(i=0;i<n;i++)
+        {
+                for(j=0;j<n;j++)
+                {
+                        printf("%d\t",floydp[i][j]);
+                }
+		printf("\n");
+        }
+
+}
+	
+	
+void main()
+{
+	struct timeval tv;
+	double dstart,dend;
+	int cost[MAX][MAX],n,i,j;
+	printf("Enter the number of vertices\n");
+	scanf("%d",&n);
+	printf("Enter the cost matrix\n");	
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			scanf("%d",&cost[i][j]);
+		}
+	}
+	printf("Cost Matrix is : \n");
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			printf("%d\t",cost[i][j]);
+		}
+		printf("\n");
+	}
+	gettimeofday(&tv,NULL);
+	dstart=tv.tv_sec+(tv.tv_usec/100000.0);
+	floyd_ser(cost,n);
+	gettimeofday(&tv,NULL);
+	dend=tv.tv_sec+(tv.tv_usec/100000.0);
+	printf("Elapsed time : series  = %f \n",dend-dstart);
+	gettimeofday(&tv,NULL);
+	dstart=tv.tv_sec+(tv.tv_usec/100000.0);
+        floyd_par(cost,n);
+	gettimeofday(&tv,NULL);
+        dend=tv.tv_sec+(tv.tv_usec/100000.0);
+        printf("Elapsed time : parallel = %f \n",dend-dstart);
+	
+}	
+	
+
+

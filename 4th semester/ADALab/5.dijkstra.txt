@@ -1,0 +1,75 @@
+#include<stdio.h>
+#include<stdlib.h>
+void read_graph(int cost[20][20],int n)
+{
+	int i,j;
+	printf("enter matrix\n");
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+			scanf("%d",&cost[i][j]);
+	}
+}
+void dij(int n,int s,int cost[20][20],int d[20],int p[20])
+{
+	int i,j,b,visit[20];
+	for(i=0;i<n;i++)
+	{
+		visit[i]=0;
+		d[i]=cost[s][i];
+		p[i]=s;
+	}
+	visit[s]=1;
+	for(i=1;i<n;i++)
+	{
+		int min=999;
+		int x=-1;
+		for(j=0;j<=n-1;j++)
+		{
+			if(visit[j]==0 && d[j]<min)
+			{ 
+				min=d[j];
+		 		x=j;
+			}
+		}
+		if(x==-1)
+			return;
+                visit[x]=1;
+		for( b=0;b<=n-1;b++)
+		{
+			if(visit[b]==0 && (d[x]+cost[x][b])<d[b])
+			{
+				d[b]=d[x]+cost[x][b];
+				p[b]=x;
+			}
+		}
+	}
+}
+void main()
+{
+	int i,n,s,k,d[20],p[20],cost[20][20];
+	printf("enter no of vertices\n");
+	scanf("%d",&n);
+	
+	
+	read_graph(cost,n);
+	 printf("enter source\n");
+        scanf("%d",&s);
+	dij(n,s,cost,d,p);
+	for(i=0;i<=n-1;i++)
+	{
+		if(d[i]==999)
+			printf("node %d is not reachable from source\n",i);
+		else
+		{
+			k=i;
+			while(k!=s)
+			{
+				printf("%d<---",k);
+				k=p[k];
+			}
+		printf("<---%d with cost= %d\n",k,d[i]);
+		}
+	}
+}
+	

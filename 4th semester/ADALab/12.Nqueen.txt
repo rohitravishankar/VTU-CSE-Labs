@@ -1,0 +1,69 @@
+#include<stdio.h> 
+#include<math.h>
+int n,x[20];
+int s_count=0;
+int place (int k,int i)
+{
+	int j;
+	for (j=1;j<=(k-1);j++)
+	{
+		if( (x[j]==i) || (abs( x[j]-i)==abs(j-k)))
+			return(0);
+		
+	}
+	return 1;
+}
+
+
+void display()
+{
+	int i,j;
+	for(i=1;i<=n;i++)
+	{	
+		for(j=1;j<=n;j++)
+		{	
+			if(j==x[i])
+				printf("Q ");
+			else
+				printf("# ");
+		}
+		printf("\n");
+	
+	}
+	printf("\n");
+}
+
+int n_queen(int k)
+{
+	int i;
+	for (i=1;i<=n;i++)
+		if(place(k,i)==1)
+		{
+			x[k]=i;
+			if(k==n)
+			{
+				s_count++;
+				printf("%d\n",s_count);
+				display();
+			}
+			else
+				n_queen(k+1);
+		}
+}
+void main()
+{
+	int i;
+	printf("enter the number of queens\n");
+	scanf("%d",&n);
+	for(i=1;i<=n;i++)
+	{
+		x[i]=0;
+	}
+	if(n<4)
+		printf("no solution\n");
+	else 
+		n_queen(1);
+}
+
+
+		

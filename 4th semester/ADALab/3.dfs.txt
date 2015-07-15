@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<stdlib.h>
+void dfs(int curvertex,int visited[100], int a[100][100], int n);
+void main()
+{
+	int n,i,j,visited[100],a[100][100];
+	printf("Enter the number of vertices:\n");
+	scanf("%d", &n);
+	for(i=0;i<n;i++)
+	{
+		visited[i]=0;
+	}
+	printf("Enter the adjacency matrix:\n");
+	for(i=0;i<n;i++)
+	{
+	  for(j=0;j<n;j++)
+	  {
+		scanf("%d",&a[i][j]);
+	  }
+	}
+	for(i=0;i<n;i++)
+	{
+	  for(j=0;j<n;j++)
+	  {
+		visited[j]=0;
+	  }
+	  dfs(i,visited,a,n);
+	  for(j=0;j<n;j++)
+	  {
+		if(visited[j]==0)
+		{
+		printf("Graph is not connected as there is no path btw %d and %d\n",i,j);
+		exit(0);
+		}
+	  }
+	}
+	printf("Graph is connected\n");
+}
+void dfs(int curvertex,int visited[100],int a[100][100],int n)
+{
+	visited[curvertex]=1;
+	int i;
+	for(i=0;i<n;i++)
+	{
+	  if(a[curvertex][i]==1 && !visited[i])
+		dfs(i,visited,a,n);
+	}
+}
+

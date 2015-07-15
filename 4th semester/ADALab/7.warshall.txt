@@ -1,0 +1,78 @@
+
+#include<stdio.h>
+#include<math.h>
+#define max 10 
+void input(int a[max][max],int n)
+{
+	int i,j;
+	//printf("\n enter the no. of vertices:");
+	//scanf("%d",&n);
+	printf("enter the adjancency matrix:\n");
+	for(i=1;i<=n;i++)
+		for(j=1;j<=n;j++)
+			scanf("%d",&a[i][j]);
+	for(i=1;i<=n;i++)
+	{
+                for(j=1;j<=n;j++)
+		{
+                        printf("%d\t",a[i][j]);
+
+		}
+		printf("\n");
+	}
+
+
+}
+void warshall(int r[max][max],int n)
+{
+
+	int k,i,j;
+	for(k=1;k<=n;k++)
+	{
+		for(i=1;i<=n;i++)
+		{
+			for(j=1;j<=n;j++)
+			{
+				if(r[i][j]==1||r[i][k]==1&&r[k][j]==1)
+					r[i][j]=1;
+			}
+		}
+	}
+	printf("out matrix is:\n");
+	 for(i=1;i<=n;i++)
+        {
+                for(j=1;j<=n;j++)
+                {
+                        printf("%d\t",r[i][j]);
+
+                }
+                printf("\n");
+        }
+
+
+
+
+}
+int main()
+{
+	int a[10][10],n;
+	printf("\n enter the no. of vertices:");
+        scanf("%d",&n);
+	input(a,n);
+	warshall(a,n);
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,118 @@
+
+
+#include<stdlib.h>
+#include<math.h>
+#include<sys/time.h>
+#include<stdio.h>
+#include<omp.h>
+int merge(int a[],int l,int mid,int h)
+
+{
+	int b[10000];
+	int i,j,k;
+	i=l;
+	j=mid+1;
+	k=l;
+	{
+		if(a[i]<a[j])
+		{
+			b[k]=a[i];
+			i++;
+			k++;
+		}
+		else
+		{
+			b[k]=a[j];
+			j++;
+			k++;
+		}
+	}
+	while(i<=mid)
+	{
+		b[k]=a[i];
+		i++;
+		k++;
+	}
+	while(j<=h)
+	{
+		b[k]=a[j];
+		j++;
+		k++;
+	}
+}
+
+void mergesort(int a[],int l,int h,int numthread)
+{
+	int mid,id;
+	if(l<h)
+	{
+		mid=(l+h)/2;
+		if(numthread>1)
+		{
+			#pragma omp parallel sections
+			{
+				#pragma omp section
+				{
+					id=omp_get_thread_num();
+					printf("%d",id);
+					mergesort(a,l,mid,numthread/2);
+				}
+				#pragma omp section
+				{
+					id=omp_get_thread_num();
+					printf("%d",id);
+					mergesort(a,mid+1,h,numthread-(numthread/2));
+				}
+			}
+		}
+		else
+		{
+			mergesort(a,l,mid,1);
+			mergesort(a,mid+1,h,1);
+		}
+		merge(a,l,mid,h);
+
+	}
+}
+
+void generate(int a[],int n)
+{
+	int i;
+	for(i=0;i<n;i++)
+	{
+			a[i]=rand()%1000;
+	}
+}
+
+void print(int a[])
+{
+	int i;
+	for(i=0;i<100;i++)
+	{
+		printf("\t%d",a[i]);	
+	}
+}
+
+
+int main()
+{
+	FILE *f;
+	struct timeval tv;	
+	int l,r,i;
+	double de,dend;
+	int b[10000];
+	f=fopen("merge.txt","w");
+	for(i=100;i<1000;i+=100)
+	{
+		generate(b,i);
+		gettimeofday(&tv,NULL);
+		de=tv.tv_sec + (tv.tv_usec/1000000.00);
+		mergesort(b,0,i-1);		
+		gettimeofday(&tv,NULL);
+		dend=tv.tv_sec + (tv.tv_usec/1000000.00);
+		fprintf(f,"%d\t%lf\n",i,dend-de);
+	}
+	fclose(f);
+	system("gnuplot");
+	return 0;
+}

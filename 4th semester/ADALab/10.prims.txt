@@ -1,0 +1,81 @@
+
+
+#include<stdio.h> 
+#include<stdlib.h>
+void prim(int cost[20][20],int n);
+void main()
+{
+	int cost[20][20],i,j,n;
+	printf("enter the no of vertices\n");
+	scanf("%d",&n);
+	printf("enter the cost matrix\n");
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			scanf("%d",&cost[i][j]);
+		}
+	}
+	prim(cost,n);
+}
+void prim(int cost[20][20],int n)
+{	
+	int min,source,u,v[20],d[20],k,t[20][2],p[20],x,i,j,count,sum;
+	min=9999;
+	source=0;
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+		{
+			if(cost[i][j]!=0&&cost[i][j]<=min)
+			{
+				min=cost[i][j];
+				source=i;
+			}
+       }		}
+	for(u=0;u<n;u++)
+	{
+		d[u]=cost[source][u];
+		v[u]=0;
+		p[u]=source;
+	}
+	v[source]=1;
+	d[source]=0;
+	 k=count=sum=0;
+	while(count!=n-1)
+	{
+		min=9999;
+		for(j=0;j<n;j++)
+		{
+			if(v[j]!=1 && d[j]<=min)
+			{
+				min=d[j];
+				u=j;
+			}
+		}
+	t[k][0]=u;
+	t[k][1]=p[u];
+	k++;
+	count++;
+	sum+=cost[u][p[u]];
+	v[u]=1;
+	for(x=0;x<n;x++)
+	{
+		if(v[x]!=1 && cost[u][x]<d[x])
+		{
+			d[x]=cost[u][x];
+			p[x]=u;
+		}
+	}
+	}
+	if(sum>=9999)
+		printf("\n the spanning tree does not exists");
+	else
+	{
+		printf("the spanning tree exists and minimum cost spanning tree is\n");
+		for(i=0;i<n-1;i++)
+		
+			printf("%d-->%d\n",t[i][0],t[i][1]);
+			printf(" the cost of minimum cost spanning tree is %d\n",sum);
+       }
+}

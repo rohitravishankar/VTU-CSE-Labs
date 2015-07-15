@@ -1,0 +1,52 @@
+#include<stdio.h>
+void bfs(int s,int n,int visited[100],int a[100][100]);
+void main()
+{
+	int n,i,j,s,visited[100],a[100][100];
+	printf("Enter the number of vertex: \n");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		visited[i]=0;
+	}
+	printf("Enter the adjacency matrix of the digraph\n");
+	for(i=0;i<n;i++)
+	{
+	  for(j=0;j<n;j++)
+	  {
+		scanf("%d",&a[i][j]);
+	  }
+	}
+	printf("Enter the source vertex :\n");
+	scanf("%d",&s);
+	bfs(s,n,visited,a);
+	for(i=0;i<n;i++)
+	{
+	  if(visited[i])
+	  {
+		printf("Node %d is reachable from %d\n",i,s);
+	  }
+	  else
+	  {
+		printf("Node %d is not reachable from %d\n",i,s);
+	  }
+	}
+}
+void bfs(int s,int n,int visited[100],int a[100][100])
+{
+	int q[50],i,rear,front,k;
+	rear=front=-1;
+	q[++rear]=s;  visited[s]=1;
+	while(front!=rear)
+	{
+		k=q[++front];
+		for(i=0;i<n;i++)
+		{
+		  if(a[k][i]==1 && !visited[i])
+		  {
+			visited[i]=1;
+			q[++rear]=1;
+		  }
+		}
+	}
+}
