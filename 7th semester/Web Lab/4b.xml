@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE Student SYSTEM "Student.dtd">
+
+<?xml-stylesheet type="text/xsl" href="4b.xsl"?>
+<Student>
+        <Student_Info>
+             <USN>1PE10CS200</USN>
+             <NAME>XYZ</NAME>
+             <COLLEGE>PESIT, BSC</COLLEGE>
+             <BRANCH>CSE</BRANCH>
+             <YOJ>2010</YOJ>
+             <Email>xyz@gmail.com </Email>
+        </Student_Info>
+</Student>
