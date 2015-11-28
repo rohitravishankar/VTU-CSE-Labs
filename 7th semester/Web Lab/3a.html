@@ -42,16 +42,16 @@
 </head>
 <body>
 	<script type="text/javascript">
-		var topLayer="layer3";
-		function move(toTop)
+		var topLayer="3";
+		function mover(toTop)
 		{
 			document.getElementById(topLayer).style.zIndex="0";
 			document.getElementById(toTop).style.zIndex="1";
 			topLayer=toTop;
 		}
 	</script>
-	<p class="plane1" id="layer1" onMouseOver="move('layer1');">Web Lab - Computer Science</p>
-	<p class="plane2" id="layer2" onMouseOver="move('layer2');">Seventh Semester</p>
-	<p class="plane3" id="layer3" onMouseOver="move('layer3');">Rohit</p>
+	<p class="plane1" id="1" onMouseOver="mover('1');">Web Lab</p>
+	<p class="plane2" id="2" onMouseOver="mover('2');">7th Semester</p>
+	<p class="plane3" id="3" onMouseOver="mover('3');">Rohit</p>
 </body>
 </html>

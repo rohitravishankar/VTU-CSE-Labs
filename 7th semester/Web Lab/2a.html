@@ -5,16 +5,16 @@
 <head> <title> USN Validation </title> </head>
 <body>
 	<script type="text/javascript">
-		function func(usn)
+	function func(usn)
+	{
+		var pattern1=/^[1-4][A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{3}$/
+		if(!usn.value.match(pattern1)||usn.value.length==0)
 		{
-			var pattern1=/^[1-4][A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{3}$/
-			if(!usn.value.match(pattern1)||usn.value.length==0)
-			{
-				alert("Invalid USN!\nEnter a valid USN")
-				return false
-			}
-			else alert("USN valid!")
+			alert("Invalid USN!\nEnter a valid USN")
+			return false
 		}
+		else alert("USN valid!")
+	}
 	</script>
 	<form action="">
 		<p>

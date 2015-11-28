@@ -4,17 +4,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head> <title>Squares of numbers</title> </head>
 <body>
-	<h1>Printing numbers &amp; calculating their squares</h1>
-	<script type="text/javascript">
-	var n=prompt("Enter a number","");
+<h1>
+Printing numbers and calculating their squares
+</h1>
+<script type="text/javascript">
+	var n,i;
+	n=prompt("Enter a number","");
 	if(n>0)
 	{
 		c="Number | Square"
-		for(i=1;i<=n;i++)
-			c=(c+"\n"+i+" -----> "+i*i);
+		for(i=1;i<=n;i++) c=(c+"\n"+i+" -----> "+i*i);
 		alert(c)
 	}
 	else alert("Enter a number greater than 1.")
-	</script>
+</script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <html>
 <body bgcolor="aqua">
 <table border="1">
-	<caption style="font-weight:bold;font-size:20px"> STUDENT Information</caption>
+	<!--<caption style="font-weight:bold;font-size:20px"> STUDENT Information</caption>-->
 	<tr bgcolor="yellow">
 		<th>USN</th>
 		<th>NAME</th>

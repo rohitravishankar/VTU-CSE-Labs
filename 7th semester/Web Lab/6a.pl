@@ -10,4 +10,4 @@ $input=param("username");
 @msgs=("Good morning","Welcome","How are you doing?","Hello!");
 $i=int rand scalar @msgs;
 
-print "Hi, $input.<br>Message: " , $msgs [$i];
+print "Hi, $input.<br>Message:",  $msgs [$i];
